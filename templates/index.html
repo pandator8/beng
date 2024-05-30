@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactivité avec JavaScript</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>bien ?</h1>
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
+        <button onclick="runPythonScript()">Prochaine page !</button>
+    </div>
+    <script>
+        async function runPythonScript() {
+            try {
+                const response = await fetch('/run-script');
+                const data = await response.json();
+                if (data.error) {
+                    alert('Erreur : ' + data.error);
+                } else {
+                    alert('Succès : ' + data.output);
+                }
+            } catch (error) {
+                alert('Erreur de requête : ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
